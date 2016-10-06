@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>Project Manager {% block page-title %}{% endblock %}</title>
+        
+        <!-- Bootstrap includes -->
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+        
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+        
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.js"></script>
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/base.css"  />
+        {% block scripting %}
+        <script type="application/javascript">
+            
+            // When the browser is ready...
+            $(function() {
+                
+                // Setup form validation on the #register-form element
+                $("#form1").validate({
+                    
+                    // Specify the validation rules
+                    rules: {
+                        id_projects: "required"
+                    },// Specify the validation error messages
+                    messages: {
+                        id_project: "You must choose a project to view"
+                    },
+                    
+                    submitHandler: function(form) {
+                        form.submit();
+                    }
+                });
+                
+            });
+            
+                $(function() {
+
+                    (function ($) {
+                        $('#id_projectFilter').on('keyup', function (e) {
+                            var rex = new RegExp($(this).val(),'i');
+                            $('.searchable tr').hide();
+                            $('.searchable tr').filter(function () {
+                                    return (rex.test($(this).text()));
+                            }).show();
+                        });
+                    }(jQuery));
+                });
+            
+            
+
+			$(document).ready(function() {
+
+				$('tr td').click(function () {
+					var id = $(this).parent().find("td:first-child").html();
+					window.location.href = '/projects/' + id;
+				});
+
+			});
+        </script>
+        {% endblock %}
+        <!-- Bootstrap includes -->
+        
+    </head>
+    <body>
+	<div id="wrap">
+        {% block navbar %}
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				
+				<!-- Brand and toggle get grouped for better mobile display -->
+				
+				<div class="navbar-header" style="min-width:200px">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/">{% block nav-brand %}Project Management{% endblock %}</a>
+				</div>
+				
+				<!-- Projects Navigation -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav navbar-left">
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Projects <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="/">View All Projects</a></li>
+								<li><a href="/projects/new">Add Project</a></li>
+							</ul>
+						</li>
+					</ul>
+					
+					<!-- Manufacturers Navigation -->
+					<ul class="nav navbar-nav"> 
+						<li class="dropdown">
+							<a href="/manufactures/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manufacturers <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Edit Manufacture</a></li>
+								<li><a href="#">Add Manufacture</a></li>
+							</ul>
+						</li>
+					</ul>
+					
+					<!-- Hardware Navigation -->
+					<ul class="nav navbar-nav"> 
+						<li class="dropdown">
+							<a href="/hardware/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hardware <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="/hardware/edit/selection/">Edit Hardware</a></li>
+								<li><a href="/hardware/new/">Add Hardware</a></li>
+							</ul>
+						</li>
+					</ul>
+					<!-- Reports Navigation -->
+					<ul class="nav navbar-nav"> 
+						<li class="dropdown">
+							<a href="/manufactures/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="/reports/doors/all" class='disabled' >All Doors Status Report</a></li>
+								<li><a href="/reports/doors/issue" class="disabled">Door With Issues Report</a></li>
+								<li><a href="/reports/cameras/all">All Camera Status Report</a></li>
+							</ul>
+						</li>
+					</ul>
+					
+					<!-- Administrative Actions -->
+					<ul class="nav navbar-nav navbar-right">
+					<li role="separator" class="divider-vertical"></li>
+						{% block admin-tasks %}
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="#" class="disabled">View Account</a></li>
+								<li><a href="#">Another action</a></li>
+								<li><a href="#">Something else here</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="#">Log Out</a></li>
+							</ul>
+						</li>
+						{% endblock %}
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
+		</nav>
+        {% endblock %}    
+            
+		<div class="content-frame">
+			{% block page-content %}
+
+				{% csrf_token %}
+				{{ form }}
+			<br />
+			<div class="table-responsive">
+				<table class="table table-striped table-hover table-condensed table-head">
+					<thead>
+						<tr>
+							<th class="hidden" id="id">ID</th>
+							<th>Job Number</th>
+							<th>Title</th>
+						</tr>
+					</thead>
+				</table>
+				<div class="table-body scrollable" style="height:200px; overflow:auto">
+					<table class="table table-striped table-hover table-condensed table-scrollable" data-toggle="table">
+						<tbody class="searchable" >
+							{% for obj in list %}
+							<tr>
+								<td class="hidden" id="id">{{ obj.id }}</td>
+								<td>{{ obj.job_code }}</td>
+								<td>{{ obj.title }}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		{% endblock %}
+	</div>
+        {% block footer %}
+        <div class="footer">
+            <div class="container">
+                <p class="text-muted credit">© 2015 Jason Dunsmore All rights reserved. Powered by Django™</p>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+            
+            
+            
+        
+</body>
+</html>

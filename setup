@@ -1,0 +1,8 @@
+#!/bin/sh
+
+virtualenv --no-site-packages --distribute ../PM
+cp -r ./* ../PM
+cd ../PM
+rm -R ../Project_Management
+source bin/activate
+pip install -r requirements.txt

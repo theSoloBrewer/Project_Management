@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block page-title %}{{ title }}{% endblock %}
+{% block scripting %}
+        <script type="application/javascript">
+            
+            // When the browser is ready...
+				$(function () {
+                    $(function ($) {
+                        $('#id_projectFilter').on('keyup', function (e) {
+                            var rex = new RegExp($(this).val(),'i');
+                            $('.searchable tr').hide();
+                            $('.searchable tr').filter(function () {
+                                    return (rex.test($(this).text()));
+                            }).show();
+                        });
+                    }(jQuery));
+				});
+            
+            $(function() {
+                $('tr').click(function () {
+                    var id = $(this).find("td#id").html();
+                    window.location.href =  window.location.href + '/' + id;
+                });
+			});
+        </script>
+{% endblock %}
+{% block nav-brand %}{{ title }}{% endblock %}
+{% block page-content %}
+
+	{% csrf_token %}
+	<label for="id_projectFilter">Filter:</label>
+	<input class="form-control" id="id_projectFilter" maxlength="200" name="projectFilter" type="text">
+	<br />
+	<div class="table-responsive">
+		<table class="table table-striped table-hover table-condensed table-head">
+			<thead>
+				<tr>
+					<th class="hidden" id="id">ID</th>
+					<th>Job Number</th>
+					<th>Title</th>
+				</tr>
+			</thead>
+		</table>
+		<div class="table-body scrollable" style="height:200px; overflow:auto">
+			<table class="table table-striped table-hover table-condensed table-scrollable" data-toggle="table">
+				<tbody class="searchable" >
+					{% for obj in list %}
+					<tr>
+						<td class="hidden" id="id">{{ obj.id }}</td>
+						<td>{{ obj.job_code }}</td>
+						<td>{{ obj.title }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+{% endblock %}

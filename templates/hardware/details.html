@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block page-title %}Hardware{% endblock %}
+{% block nav-brand %}Hardware{% endblock %}
+{% block page-content %}
+<form id="form1" name="form1" method="post" action="">
+    {% csrf_token %}
+	<input type="hidden" name="id" value="{{ form.instance.id }}">
+  {{ form }}
+  <br />
+  <label class="action-forward">
+    <input type="submit" name="submit" id="submit"  class="btn btn-default action-forward" value="Save" />
+  </label>
+</form>
+{% endblock %}

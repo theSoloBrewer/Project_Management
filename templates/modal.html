@@ -1,0 +1,9 @@
+<link rel="stylesheet" href="{{ STATIC_URL }}css/modal.css"  />
+{% block scripting %}{% endblock %}
+<div id="modal-wrap">
+    <div class="modal-content-frame">
+        {% block page-content %}{% endblock %}
+    </div>
+</div>
+{% block footer %}
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block page-title %}Hardware{% endblock %}
+
+{% block scripting %} 
+<script>
+$(function() {
+
+    (function ($) {
+        $('#id_device, #id_manufacture, #id_model ').on('change', function (e) {
+        /* filter hardware results */
+            var dev = new RegExp($("#id_device option:selected").text(),'i');
+            var man = new RegExp($("#id_manufacture option:selected").text(),'i');
+            var mode = new RegExp($("#id_model option:selected").text(),'i');
+            $('.searchable tr').hide();
+            $('.searchable tr').filter(function () {
+                    return (dev.test($(this).text()) & man.test($(this).text()) & mode.test($(this).text()));
+            }).show();
+        /* filter model list */
+            $('#id_model').children().remove();
+            $(".searchable tr").filter(function () {
+                var element = $(this);
+                if(element.css('display') == 'table-row') {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }).find("td#model").each( function(i) {
+                var option = $('<option>').text($(this).text());
+                $('#id_model').append(option);
+            });
+        });
+    }(jQuery));
+});
+$(function() {
+    $('input#clear').click(function () {
+        $("#id_device").val('');
+        $('.searchable tr').show();
+    });
+});
+$(document).ready(function() {
+{% if table_action == 'select' %}
+	$('.searchable tr').click(function () {
+		var id = $(this).find("td#id").html();
+		$('input#selectedChoice').val(id);
+		$('form').trigger('submit');
+		return false;
+	});
+{% else %}
+	$('tr td').click(function () {
+		var id = $(this).parent().find("td:first-child").html();
+		window.location.href = '/hardware/' + id;
+	});
+{% endif %}
+});
+</script> 
+{% endblock %}
+
+{% block nav-brand %}Hardware{% endblock %}
+
+{% block page-content %}
+<form id="form1" name="form1" method="post" action="">
+  {% csrf_token %}
+  <div class="fieldWrapper" style="display:inline-block; min-width:30%">
+    <label for="{{ form.device.id_for_label }}">Device Type:</label>
+    {{ form.device }} </div>
+  <div class="fieldWrapper" style="display:inline-block; min-width:30%">
+    <label for="{{ form.manufacture.id_for_label }}">Manufacture:</label>
+    {{ form.manufacture }} </div>
+  <div class="fieldWrapper" style="display:inline-block; min-width:30%">
+    <label for="{{ form.model.id_for_label }}">Model:</label>
+    {{ form.model }} </div>
+  <p>
+  <br />
+    <label>
+      <input type="button" name="clear" id="clear"  class="btn btn-default" value="Clear" />
+    </label>
+  </p>
+  <input type="hidden" id="selectedChoice" name="selectedChoice" value="></input>
+</form>
+<br />
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-condensed table-head">
+        <thead>
+            <tr>
+                <th class="hidden">{{ obj.id }}</th>
+                <th> Device Type</th>
+                <th>Manufacture</th>
+                <th>Model</th>
+            </tr>
+        </thead>
+    </table>
+    <div class="table-body scrollable" style="height:200px; overflow:auto">
+        <table class="table table-striped table-hover table-condensed table-scrollable" data-toggle="table">
+            <tbody class="searchable" >
+                {% for obj in list %}
+                <tr>
+                    <td class="hidden" id="id">{{ obj.id }}</td>
+                    <td id="type">{{ obj.type }}</td>
+                    <td id="manufacture">{{ obj.manufacture }}</td>
+                    <td id="model">{{ obj.model }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %} 

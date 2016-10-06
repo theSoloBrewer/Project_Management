@@ -1,0 +1,183 @@
+.navbar-default .navbar-nav > li.navbar-split > a:nth-child(2) {
+	padding-left: 8px;
+}
+.navbar-default .navbar-nav > li.navbar-split > a:first-child {
+	padding-right: 8px;
+}
+.navbar-default .navbar-nav > li.navbar-split > a {
+	display: inline-block;
+	float: left;
+}
+.container {
+  width: auto;
+  max-width: 680px;
+  padding: 0 15px;
+}
+.container .credit {
+  margin: 20px 0;
+}
+.table-condensed > tbody > tr > td, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > td, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > thead > tr > th {
+	width: 20%;
+}
+html,
+body {
+  height: 100%;
+  -webkit-appearance: none;
+  /* The html and body elements cannot have any padding or margin. */
+}
+select.filter {
+    -webkit-appearance: menulist;
+    -moz-appearance: none;
+    height:100px;
+}
+/* Wrapper for page content to push down footer */
+#wrap {
+  position: relative;
+  min-height: 100%;
+  height: auto !important;
+  /* Negative indent footer by its height */
+  margin: 0px auto -60px 0px;
+  /* Pad bottom by footer height */
+  padding: 0px auto 60px 0px;
+}
+
+/* Set the fixed height of the footer here */
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+  box-shadow: 0px 3px 9px rgba(0,0,0,0.075) inset;
+  overflow: hidden;
+}
+@media screen and (max-width: 800px) {
+	.footer {
+		position:relative;
+	}
+}
+.footer > .container > p {
+	text-align:center;
+    margin: 20px auto;
+    font-size: 1.6vh;
+}
+.content-frame{
+	margin:auto;
+	width:75%;
+}
+@media screen and (min-width: 800px) {
+    .content-frame {
+    position: relative;
+    min-height: 100%;
+    height: auto !important;
+    /* Negative indent footer by its height */
+    /* margin: 0 auto -60px; */
+    /* Pad bottom by footer height */
+    padding: 0 0 60px;
+    width: 65%;
+    }
+}
+#wrap .content-frame form p #projects_list {
+	/*width:300px;*/
+}
+.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+  background-color: #999;
+  color:#eeeeee;
+}
+.table-head{
+    margin:0;
+}
+  .table-body {
+  max-height: 450px;
+  width: 100%;
+  margin: 0
+  overflow-y:auto;
+}
+.table-scrollable {
+  margin:0;
+  padding:0;
+  overflow: auto;
+}
+.action-forward {
+    float:right;
+}
+.navbar .divider-vertical {
+height: 50px;
+margin: 0 9px;
+border-right: 1px solid #e5e5e5;
+border-left: 1px solid #f2f2f2;
+overflow:hidden;
+width:1px;
+}
+
+.navbar-inverse .divider-vertical {
+border-right-color: #e5e5e5;
+border-left-color: #111111;
+overflow:hidden;
+width:1px
+}
+@media screen and (min-width: 800px) {
+	.item-list {
+		height: 400px;
+	}
+}
+
+
+/*
+ *
+ *   Mobile Design mods
+ *
+ *
+ */
+
+
+@media (max-width: 767px) {
+/*     .navbar-collapse .nav > .divider-vertical {
+    width: auto;
+    height: 1px;
+    margin: 9px 1px;
+    *margin: -5px 0 5px;
+    overflow: hidden;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #ffffff;
+    }
+	
+	.nav-tabs > li {
+		float: none;
+		border: 1px solid #ddd;
+	}
+	.nav-tabs > li.active > a {
+		border: none;
+	}
+	.nav > li > a:hover, .nav > li > a:focus, .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a.focus {
+		background: none;
+		border: none;
+	} */
+	.nav-tabs {
+		overflow-x: auto;
+		overflow-y: hidden;
+		display: -webkit-box;
+		display: -moz-box;
+	}
+	.scrollable {
+		height: 250px;
+	}
+	.navbar .divider-vertical {
+	height: 1px;
+	margin: 0px 9px;
+	border-top: 1px solid rgb(229, 229, 229);
+	border-bottom: 1px solid rgb(242, 242, 242);
+	overflow: hidden;
+	width: auto;
+}
+}
+a .disabled,
+a .disabled:visited ,
+a .disabled:active,
+a .disabled:hover {
+    background-color:#d9d9d9 !important;
+    color:#aaa !important;
+}
+

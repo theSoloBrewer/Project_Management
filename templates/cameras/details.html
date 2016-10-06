@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% block page-title %}- Camera Details{% endblock %}
+{% block scripting %}
+<script>
+$(document).ready(function () {
+	if ($('#id_ip_cam').prop('checked')){
+			$('fieldset.network-border').show();
+			$('#id_serial').parents('.fieldWrapper').hide();
+		}else {
+			$('fieldset.network-border').hide();
+			$('#id_serial').parents('.fieldWrapper').show();
+		}
+	$('#id_ip_cam').click( function() {
+		var $input = $(this);
+		if ($input.prop('checked')){
+			$('fieldset.network-border').show();
+			$('#id_serial').parents('.fieldWrapper').hide();
+		}else {
+			$('fieldset.network-border').hide();
+			$('#id_serial').parents('.fieldWrapper').show();
+		}
+	});
+});
+</script>
+<style>
+.fieldWrapper {
+	overflow: auto;
+	padding: 6px;
+}
+fieldset.network-border {
+	border: 1px groove #ddd !important;
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+}
+fieldset {
+	width: 60%;
+	position: relative;
+	left: 10%;
+}
+legend.network-border {
+	position: relative;
+	width: auto;
+	bottom: -0.6em;
+	border: none;
+	font-size: 1.2em !important;
+    font-weight: bold !important;
+    text-align: left !important;
+	padding: 0 5px;
+}
+</style>
+{% endblock %}
+{% block page-content %}
+<form id="form1" name="form1" method="post" action="">
+	{% csrf_token %}
+		<div class="div-table">
+		{{ form.project }}
+		<input type="hidden" id="camera_id" value="{{ form.instance.id }}" />
+		<div class="fieldWrapper">
+			<label class="col-lg-2 col-md-2" for="{{ form.name.id_for_label }}">Camera Name:</label>
+			<div class="col-lg-8 col-md-8" >{{ form.name }}</div>
+		</div>
+		<div class="fieldWrapper">
+			<label class="col-lg-2 col-md-2" for="{{ form.device.id_for_label }}">Camera Type:</label>
+			<div class="col-lg-8 col-md-8" >{{ form.device }}</div>
+		</div>
+		<div class="fieldWrapper">
+			<label class="col-lg-2 col-md-2" for="{{ form.installed.id_for_label }}">Installed:</label>
+			<div class="col-lg-2 col-md-2" >{{ form.installed }}</div>
+		</div>
+		<div class="fieldWrapper">
+			<label class="col-lg-2 col-md-2" for="id_ip_cam">IP Camera: {{ form.network_id }}</label>
+			<div class="col-lg-2 col-md-2" ><input {% if form.network.value %}checked="checked"{% endif %} class="form-control" id="id_ip_cam" name="ip_cam" type="checkbox"></div>
+		</div>
+		<div class="fieldWrapper">
+			<label class="col-lg-2 col-md-2" for="{{ form.serial.id_for_label }}">Serial:</label>
+			<div class="col-lg-8 col-md-8" >{{ form.serial }}</div>
+		</div>
+		<fieldset class="network-border" style="display:none">
+			<legend class="network-border">Network</legend>
+			<div class="control-group network">
+				<div class="fieldWrapper">
+					<label class="col-lg-2 col-md-2" for="{{ netform.ip.id_for_label }}">IP Address:</label>
+					<div class="col-lg-8 col-md-8" >{{ netform.ip }}</div>
+				</div>
+				<div class="fieldWrapper">
+					<label class="col-lg-2 col-md-2" for="{{ netform.subnet.id_for_label }}">Subnet:</label>
+					<div class="col-lg-8 col-md-8" >{{ netform.subnet }}</div>
+				</div>
+				<div class="fieldWrapper">
+					<label class="col-lg-2 col-md-2" for="{{ netform.gateway.id_for_label }}">Gateway:</label>
+					<div class="col-lg-8 col-md-8" >{{ netform.gateway }}</div>
+				</div>
+				<div class="fieldWrapper">
+					<label class="col-lg-2 col-md-2" for="{{ netform.MAC.id_for_label }}">MAC:</label>
+					<div class="col-lg-8 col-md-8" >{{ netform.MAC }}</div>
+				</div>
+				<div class="fieldWrapper">
+					<label class="col-lg-2 col-md-2" for="{{ netform.vlan.id_for_label }}">VLAN:</label>
+					<div class="col-lg-8 col-md-8" >{{ netform.vlan }}</div>
+				</div>
+			</div>
+		</fieldset>
+		<div class="fieldWrapper">
+			<label class="col-lg-2 col-md-2" for="{{ form.description.id_for_label }}">Description:</label>
+			<div class="col-lg-8 col-md-8" >{{ form.description }}</div>
+		</div>
+		<div class="fieldWrapper">
+			<label class="col-lg-2 col-md-2" for="{{ form.notes.id_for_label }}">Notes:</label>
+			<div class="col-lg-8 col-md-8" >{{ form.notes }}</div>
+		</div>
+		</table>
+		<label class="action-forward">
+			<input type="submit" name="btn-submit" id="btn-submit"  class="btn btn-default action-forward" value="Save" />
+		</label>
+		{% if form.project %}
+		<label class='action-back'>
+			<a type='button' id="add" href="/projects/{{ form.project.value }}/#tab_camera" class='btn btn-default action-back'>Close</a>
+		</label>
+		{% endif %}
+	</div>
+</form>
+{% endblock %}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<style>
+		body {
+			width: 9.5in;
+			
+		}
+		th.rotate {
+		  /* Something you can count on */
+		  height: 140px;
+		  white-space: nowrap;
+		}
+
+		th.rotate > div {
+		  transform: 
+			/* Magic Numbers */
+			translate(19px, -6px)
+			/* 45 is really 360 - 45 */
+			rotate(315deg);
+		  width: 30px;
+		}
+		th.rotate > div > span {
+		  border-bottom: 1px solid #ccc;
+		  padding: 0px 10px;
+		  display: block;
+		  text-align: left;
+		  width: 125px;
+		}	
+		tr, th, td {
+			margin: 0px;
+		}
+		table {
+			border-spacing: 0px 0px;
+			border-collapse: collapse;
+		}
+		td {
+			border: 1px Solid #ccc;
+			padding: 0px 10px;
+			white-space: nowrap;
+		}
+		.head-rotated {
+			width: 27px;
+			text-align: center;
+			padding: 0px
+		}
+		th {
+			vertical-align: bottom;
+		}
+		</style>
+	</head>
+	<body>
+		<!-- begin row -->
+		<table style="margin-top: 50px">
+			<tr>
+				<th><div><span>Camera Number</div></span></th>
+				<th><div><span>Description</div></span></th>
+				<th><div><span>Serial/MAC</div></span></th>
+				<th><div><span>Model</div></span></th>
+				<th class="rotate" style="left:-2;" ><div><span>Installed</div></span></th>
+				<th>Notes</th>
+			</tr>
+			<tr>
+			{% for f in form %}
+				<td>{{ f.name }}</td>
+				<td>{{ f.description }}</td>
+				<td>{{ f.serial }}</td>
+				<td>{{ f.device.model }}</td>
+				<td>{% if f.installed|stringformat:"s" == 'True' %}
+						 X
+					{% endif %}
+				</td>
+				<td>{{ f.notes }}</td>
+			</tr>
+		{% endfor %}
+		</table>
+	</body>
+</html>

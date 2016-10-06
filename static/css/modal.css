@@ -1,0 +1,8 @@
+.modal-content-frame {
+	position: relative;
+	min-height: 100%;
+	height: auto;
+	margin: auto;
+	padding: 60px 0px 60px;
+	width: 65%;
+}
