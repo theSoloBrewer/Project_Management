@@ -1,6 +1,5 @@
 To get started just run these commands
 
-<H3>Linux:</h3>
 <ol type="1">
   <li>virtualenv --no-site-packages --distribute {venv}</li>
   <li>cd {venv}</li>
